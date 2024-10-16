@@ -6,7 +6,8 @@ export enum groupProcedures {
   getById = "get_group_by_id",
   delete = "delete_group",
   search = "search_group",
-  count = "count_group"
+  count = "count_group",
+  createGroupForInitialize = "create_group_for_initialize",
 }
 
 export default class GroupRepository extends Repository {
@@ -172,6 +173,14 @@ export default class GroupRepository extends Repository {
         params.active,
         params.super
       )
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+
+  async createGroupForInitialize(): Promise<{ create_group_for_initialize: number }> {
+    try {
+      return this.call(groupProcedures.createGroupForInitialize)
     } catch (error: any) {
       throw new Error(error.message)
     }

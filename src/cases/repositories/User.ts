@@ -13,7 +13,8 @@ export enum userProcedures {
   getByCellphone = "get_user_id_bycellphone",
   getUserToAuthentication = "get_user_to_authentication",
   updateForRecovery = "update_for_recovery",
-  updateForConfirmation = "update_for_Confirmation"
+  updateForConfirmation = "update_for_Confirmation",
+  createUserForInitialize = "create_user_for_initialize"
 }
 
 class Nullify {
@@ -434,6 +435,16 @@ export default class UserRepository extends Repository {
         userProcedures.updateForConfirmation,
         params.userId,
         params.hash
+      )
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+
+  async createUserForInitialize(): Promise<{ create_user_for_initialize: number }> {
+    try {
+      return await this.call<{ create_user_for_initialize: number }>(
+        userProcedures.create
       )
     } catch (error: any) {
       throw new Error(error.message)
