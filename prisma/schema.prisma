@@ -1,0 +1,229 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                       Int               @id @default(autoincrement())
+  super                    Boolean           @default(false)
+  groupId                  Int
+  password                 String            @db.VarChar(500)
+  confirmationCode         String?           @db.VarChar(100)
+  needChange               Boolean           @default(false)
+  active                   Boolean           @default(false)
+  connected                Boolean           @default(false)
+  socket                   String?           @default("") @db.VarChar(100)
+  createdById              Int?
+  updatedById              Int?
+  deletedById              Int?
+  createdAt                DateTime?
+  updatedAt                DateTime?
+  deletedAt                DateTime?
+  group                    Group?            @relation(fields: [groupId], references: [id], name: "userGroup")
+  updatedBy                User?             @relation(fields: [updatedById], references: [id], name: "updatedByUser")
+  deletedBy                User?             @relation(fields: [deletedById], references: [id], name: "deletedByUser")
+  createdBy                User?             @relation(fields: [createdById], references: [id], name: "createdByUser")
+  perfil                   Profile[]         @relation("profileUsers")
+  createdByUser            User[]            @relation("createdByUser")
+  updatedByUser            User[]            @relation("updatedByUser")
+  deletedByUser            User[]            @relation("deletedByUser")
+  createdByFeature         Feature[]         @relation("createdByFeature")
+  updatedByFeature         Feature[]         @relation("updatedByFeature")
+  deletedByFeature         Feature[]         @relation("deletedByFeature")
+  createdByGroup           Group[]           @relation("createdByGroup")
+  updatedByGroup           Group[]           @relation("updatedByGroup")
+  deletedByGroup           Group[]           @relation("deletedByGroup")
+  permissionUser           Permission[]      @relation("permissionUser")
+  createdByDeviceComponent DeviceComponent[] @relation("createdByDeviceComponent")
+  updatedByDeviceComponent DeviceComponent[] @relation("updatedByDeviceComponent")
+  deletedByDeviceComponent DeviceComponent[] @relation("deletedByDeviceComponent")
+  createdByAddress         Address[]         @relation("createdByAddress")
+  updatedAddress           Address[]         @relation("updatedAddress")
+  deletedAddress           Address[]         @relation("deletedAddress")
+  createdByPermission      Permission[]      @relation("createdByPermission")
+  updatedByPermission      Permission[]      @relation("updatedByPermission")
+  deletedByPermission      Permission[]      @relation("deletedByPermission")
+  createdByAction          Action[]          @relation("createdByAction")
+  updatedByAction          Action[]          @relation("updatedByAction")
+  deletedByAction          Action[]          @relation("deletedByAction")
+}
+
+model Profile {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  name      String   @db.VarChar(200)
+  email     String?  @db.VarChar(200)
+  cellphone String?  @db.VarChar(11)
+  cpf       String?  @db.VarChar(14)
+  rg        String?  @db.VarChar(11)
+  photo     String?  @db.VarChar(300)
+  addressId Int?
+  address   Address? @relation(fields: [addressId], references: [id], name: "profileAddress")
+  user      User     @relation(fields: [userId], references: [id], name: "profileUsers")
+}
+
+model DeviceComponent {
+  id                      Int       @id @default(autoincrement())
+  name                    String    @db.VarChar(40)
+  deviceId                Int
+  createdById             Int
+  updatedById             Int?
+  deletedById             Int?
+  createdAt               DateTime
+  updatedAt               DateTime?
+  deletedAt               DateTime?
+  createdBy               User?     @relation(fields: [createdById], references: [id], name: "createdByDeviceComponent")
+  updatedBy               User?     @relation(fields: [updatedById], references: [id], name: "updatedByDeviceComponent")
+  deletedBy               User?     @relation(fields: [deletedById], references: [id], name: "deletedByDeviceComponent")
+  featureDeviceComponents Feature[] @relation("featureDeviceComponents")
+}
+
+model Action {
+  id                  Int             @id @default(autoincrement())
+  name                String          @db.VarChar(40)
+  canonical           String          @db.VarChar(40)
+  createdById         Int
+  updatedById         Int?
+  deletedById         Int?
+  createdAt           DateTime
+  updatedAt           DateTime?
+  deletedAt           DateTime?
+  createdBy           User            @relation(fields: [createdById], references: [id], name: "createdByAction")
+  updatedBy           User?           @relation(fields: [updatedById], references: [id], name: "updatedByAction")
+  deletedBy           User?           @relation(fields: [deletedById], references: [id], name: "deletedByAction")
+  featureActionAction FeatureAction[] @relation("featureActionAction")
+  permissionAction    Permission[]    @relation("permissionAction")
+}
+
+model Feature {
+  id                   Int              @id @default(autoincrement())
+  name                 String           @db.VarChar(100)
+  canonical            String           @db.VarChar(100)
+  active               Boolean          @default(true)
+  icon                 String?          @db.VarChar(100)
+  path                 String?          @db.VarChar(300)
+  visible              Boolean          @default(true)
+  deviceComponentsId   Int?
+  createdById          Int
+  updatedById          Int?
+  deletedById          Int?
+  createdAt            DateTime
+  updatedAt            DateTime?
+  deletedAt            DateTime?
+  deviceComponents     DeviceComponent? @relation(fields: [deviceComponentsId], references: [id], name: "featureDeviceComponents")
+  createdBy            User?            @relation(fields: [createdById], references: [id], name: "createdByFeature")
+  updatedBy            User?            @relation(fields: [updatedById], references: [id], name: "updatedByFeature")
+  deletedBy            User?            @relation(fields: [deletedById], references: [id], name: "deletedByFeature")
+  groupFeatureFeature  GroupFeature[]   @relation("groupFeatureFeature")
+  permissionFeature    Permission[]     @relation("permissionFeature")
+  featureActionFeature FeatureAction[]  @relation("featureActionFeature")
+}
+
+model FeatureAction {
+  id        Int     @id @default(autoincrement())
+  featureId Int
+  feature   Feature @relation(fields: [featureId], references: [id], name: "featureActionFeature")
+  actionId  Int
+  action    Action  @relation(fields: [actionId], references: [id], name: "featureActionAction")
+}
+
+model Group {
+  id                Int            @id @default(autoincrement())
+  name              String         @db.VarChar(100)
+  canonical         String         @db.VarChar(100)
+  color             String?        @db.VarChar(7)
+  active            Boolean        @default(true)
+  super             Boolean        @default(false)
+  createdById       Int?
+  updatedById       Int?
+  deletedById       Int?
+  createdAt         DateTime?
+  updatedAt         DateTime?
+  deletedAt         DateTime?
+  createdBy         User?          @relation(fields: [createdById], references: [id], name: "createdByGroup")
+  updatedBy         User?          @relation(fields: [updatedById], references: [id], name: "updatedByGroup")
+  deletedBy         User?          @relation(fields: [deletedById], references: [id], name: "deletedByGroup")
+  groupFeatureGroup GroupFeature[] @relation("groupFeatureGroup")
+  userGroup         User[]         @relation("userGroup")
+}
+
+model GroupFeature {
+  id           Int      @id @default(autoincrement())
+  groupId      Int
+  group        Group    @relation(fields: [groupId], references: [id], name: "groupFeatureGroup")
+  featureId    Int
+  feature      Feature  @relation(fields: [featureId], references: [id], name: "groupFeatureFeature")
+  freeForGroup Boolean? @default(false)
+}
+
+model Permission {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  featureId   Int
+  actionId    Int
+  action      Action    @relation(fields: [actionId], references: [id], name: "permissionAction")
+  createdById Int?
+  updatedById Int?
+  deletedById Int?
+  createdAt   DateTime?
+  updatedAt   DateTime?
+  deletedAt   DateTime?
+  createdBy   User?     @relation(fields: [createdById], references: [id], name: "createdByPermission")
+  updatedBy   User?     @relation(fields: [updatedById], references: [id], name: "updatedByPermission")
+  deletedBy   User?     @relation(fields: [deletedById], references: [id], name: "deletedByPermission")
+  user        User      @relation(fields: [userId], references: [id], name: "permissionUser")
+  feature     Feature   @relation(fields: [featureId], references: [id], name: "permissionFeature")
+}
+
+model State {
+  ibge      Int    @id
+  acronym   String @db.VarChar(2)
+  name      String @db.VarChar(300)
+  cityState City[] @relation("cityState")
+}
+
+model City {
+  ibge        Int       @id
+  stateIbge   Int
+  state       State     @relation(fields: [stateIbge], references: [ibge], name: "cityState")
+  name        String    @db.VarChar(300)
+  addressCity Address[] @relation(name: "addressCity")
+}
+
+model Address {
+  id             Int       @id @default(autoincrement())
+  street         String    @db.VarChar(200)
+  streetNumber   String    @db.VarChar(10)
+  neighborhood   String?   @db.VarChar(100)
+  cep            String    @db.VarChar(8)
+  cityIbge       Int
+  observation    String?   @db.VarChar(500)
+  createdById    Int?
+  updatedById    Int?
+  deletedById    Int?
+  createdAt      DateTime?
+  updatedAt      DateTime?
+  deletedAt      DateTime?
+  city           City      @relation(fields: [cityIbge], references: [ibge], name: "addressCity")
+  createdBy      User?     @relation(fields: [createdById], references: [id], name: "createdByAddress")
+  updatedBy      User?     @relation(fields: [updatedById], references: [id], name: "updatedAddress")
+  deletedBy      User?     @relation(fields: [deletedById], references: [id], name: "deletedAddress")
+  profileAddress Profile[] @relation("profileAddress")
+}
+
+model Params {
+  id                Int                 @id @default(autoincrement())
+  name              String              @db.VarChar(100)
+  ApplicationParams ApplicationParams[] @relation("paramsApplication")
+}
+
+model ApplicationParams {
+  id      Int    @id @default(autoincrement())
+  paramId Int
+  param   Params @relation(fields: [paramId], references: [id], name: "paramsApplication")
+  value   String @db.VarChar(100)
+}
