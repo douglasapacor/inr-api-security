@@ -1,15 +1,5 @@
 import { postgresArrayTreatment, postgresStringfy, Repository } from "../types"
 
-export enum featureProcedures {
-  create = "create_feature",
-  update = "update_feature",
-  getById = "get_feature_by_id",
-  delete = "delete_feature",
-  search = "search_feature",
-  count = "count_feature",
-  getGroupFeature = "get_group_feature"
-}
-
 export class FeatureRepository extends Repository {
   async create(params: {
     name: string
@@ -24,7 +14,7 @@ export class FeatureRepository extends Repository {
   }): Promise<{ create_feature: number }> {
     try {
       return await this.call<{ create_feature: number }>(
-        featureProcedures.create,
+        "create_feature",
         postgresStringfy(params.name),
         postgresStringfy(params.canonical),
         params.active,
@@ -54,7 +44,7 @@ export class FeatureRepository extends Repository {
   }): Promise<{ update_feature: number }> {
     try {
       return await this.call<{ update_feature: number }>(
-        featureProcedures.update,
+        "update_feature",
         params.id,
         postgresStringfy(params.name),
         postgresStringfy(params.canonical),
@@ -105,7 +95,7 @@ export class FeatureRepository extends Repository {
         updatedById: number
         updatedName: string
         updatedAt: Date
-      }>(featureProcedures.getById, params.id)
+      }>("get_feature_by_id", params.id)
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -117,7 +107,7 @@ export class FeatureRepository extends Repository {
   }): Promise<{ delete_feature: number }> {
     try {
       return await this.call<{ delete_feature: number }>(
-        featureProcedures.delete,
+        "delete_feature",
         params.id,
         params.deletedBy
       )
@@ -163,7 +153,7 @@ export class FeatureRepository extends Repository {
           deviceComponentsName: string
         }[]
       >(
-        featureProcedures.search,
+        "search_feature",
         postgresStringfy(params.name),
         postgresStringfy(params.canonical),
         params.active,
@@ -190,7 +180,7 @@ export class FeatureRepository extends Repository {
   }): Promise<{ count_feature: number }> {
     try {
       return await this.call<{ count_feature: number }>(
-        featureProcedures.count,
+        "count_feature",
         postgresStringfy(params.name),
         postgresStringfy(params.canonical),
         params.active,
@@ -209,7 +199,7 @@ export class FeatureRepository extends Repository {
   }): Promise<{ id: number; name: string }[]> {
     try {
       return await this.list<{ id: number; name: string }[]>(
-        featureProcedures.getGroupFeature,
+        "get_group_feature",
         params.groupId
       )
     } catch (error: any) {

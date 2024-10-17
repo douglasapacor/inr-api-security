@@ -1,15 +1,5 @@
 import { postgresArrayTreatment, postgresStringfy, Repository } from "../types"
 
-export enum groupProcedures {
-  create = "create_group",
-  update = "update_group",
-  getById = "get_group_by_id",
-  delete = "delete_group",
-  search = "search_group",
-  count = "count_group",
-  createGroupForInitialize = "create_group_for_initialize",
-}
-
 export default class GroupRepository extends Repository {
   async create(params: {
     name: string
@@ -22,7 +12,7 @@ export default class GroupRepository extends Repository {
   }): Promise<{ create_group: number }> {
     try {
       return await this.call<{ create_group: number }>(
-        groupProcedures.create,
+        "create_group",
         postgresStringfy(params.name),
         postgresStringfy(params.canonical),
         postgresStringfy(params.color || ""),
@@ -48,7 +38,7 @@ export default class GroupRepository extends Repository {
   }): Promise<{ update_group: number }> {
     try {
       return await this.call<{ update_group: number }>(
-        groupProcedures.update,
+        "update_group",
         params.id,
         postgresStringfy(params.name),
         postgresStringfy(params.canonical),
@@ -91,7 +81,7 @@ export default class GroupRepository extends Repository {
         updatedbyid: number
         updatedname: string
         updatedat: Date
-      }>(groupProcedures.getById, params.id)
+      }>("get_group_by_id", params.id)
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -103,7 +93,7 @@ export default class GroupRepository extends Repository {
   }): Promise<{ delete_group: number }> {
     try {
       return await this.call<{ delete_group: number }>(
-        groupProcedures.delete,
+        "delete_group",
         params.id,
         params.deletedBy
       )
@@ -143,7 +133,7 @@ export default class GroupRepository extends Repository {
           super: boolean
         }[]
       >(
-        groupProcedures.search,
+        "search_group",
         postgresStringfy(params.name),
         postgresStringfy(params.canonical),
         postgresStringfy(params.color),
@@ -166,7 +156,7 @@ export default class GroupRepository extends Repository {
   }): Promise<{ count_group: number }> {
     try {
       return await this.call<{ count_group: number }>(
-        groupProcedures.count,
+        "count_group",
         postgresStringfy(params.name),
         postgresStringfy(params.canonical),
         postgresStringfy(params.color || ""),
@@ -178,9 +168,11 @@ export default class GroupRepository extends Repository {
     }
   }
 
-  async createGroupForInitialize(): Promise<{ create_group_for_initialize: number }> {
+  async createGroupForInitialize(): Promise<{
+    create_group_for_initialize: number
+  }> {
     try {
-      return this.call(groupProcedures.createGroupForInitialize)
+      return this.call("create_group_for_initialize")
     } catch (error: any) {
       throw new Error(error.message)
     }

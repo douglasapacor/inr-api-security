@@ -1,16 +1,10 @@
-import { postgresStringfy, Repository } from "../types"
-
-export enum applicationParamsProcedures {
-  getApplicationParams = "get_application_params",
-  createSystemUser = "create_system_user",
-  createfirstUser = "create_first_user"
-}
+import { Repository } from "../types"
 
 export default class ApplicationParamsRepository extends Repository {
   async getApplicationParams(): Promise<{ key: string; value: string }[]> {
     try {
       return await this.list<{ key: string; value: string }[]>(
-        applicationParamsProcedures.getApplicationParams
+        "get_application_params"
       )
     } catch (error: any) {
       throw new Error(error.message)
@@ -19,7 +13,7 @@ export default class ApplicationParamsRepository extends Repository {
 
   async createSystemUser(): Promise<void> {
     try {
-      return await this.call<void>(applicationParamsProcedures.createSystemUser)
+      return await this.call<void>("create_system_user")
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -27,7 +21,7 @@ export default class ApplicationParamsRepository extends Repository {
 
   async createFirtUser(): Promise<void> {
     try {
-      return await this.call<void>(applicationParamsProcedures.createfirstUser)
+      return await this.call<void>("create_first_user")
     } catch (error: any) {
       throw new Error(error.message)
     }

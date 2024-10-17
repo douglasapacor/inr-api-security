@@ -1,14 +1,5 @@
 import { postgresStringfy, Repository } from "../types"
 
-export enum deviceComponentProcedures {
-  create = "create_device_component",
-  update = "update_device_component",
-  getById = "get_device_component_by_id",
-  delete = "delete_device_component",
-  search = "search_device_component",
-  count = "count_device_component"
-}
-
 export default class DeviceComponentRepository extends Repository {
   async create(params: {
     name: string
@@ -19,7 +10,7 @@ export default class DeviceComponentRepository extends Repository {
       return await this.call<{
         create_device_component: number
       }>(
-        deviceComponentProcedures.create,
+        "create_device_component",
         postgresStringfy(params.name),
         params.deviceId,
         params.createdBy
@@ -37,7 +28,7 @@ export default class DeviceComponentRepository extends Repository {
   }): Promise<{ update_device_component: number }> {
     try {
       return await this.call<{ update_device_component: number }>(
-        deviceComponentProcedures.update,
+        "update_device_component",
         params.id,
         postgresStringfy(params.name),
         params.deviceId,
@@ -54,7 +45,7 @@ export default class DeviceComponentRepository extends Repository {
   }): Promise<{ delete_device_component: number }> {
     try {
       return await this.call<{ delete_device_component: number }>(
-        deviceComponentProcedures.delete,
+        "delete_device_component",
         params.id,
         params.deletedBy
       )
@@ -85,7 +76,7 @@ export default class DeviceComponentRepository extends Repository {
         updatedat?: Date
         updatedbyid?: bigint
         updatedname?: string
-      }>(deviceComponentProcedures.getById, params.id)
+      }>("get_device_component_by_id", params.id)
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -111,7 +102,7 @@ export default class DeviceComponentRepository extends Repository {
           deviceId: number
         }[]
       >(
-        deviceComponentProcedures.search,
+        "search_device_component",
         postgresStringfy(params.name),
         params.deviceId,
         params.limit,
@@ -128,7 +119,7 @@ export default class DeviceComponentRepository extends Repository {
   }): Promise<{ count_device_component: number }> {
     try {
       return await this.call<{ count_device_component: number }>(
-        deviceComponentProcedures.count,
+        "count_device_component",
         postgresStringfy(params.name),
         params.deviceId
       )

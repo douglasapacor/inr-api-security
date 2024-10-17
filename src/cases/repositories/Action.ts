@@ -1,15 +1,5 @@
 import { postgresStringfy, Repository } from "../types"
 
-export enum actionProcedures {
-  create = "create_action",
-  update = "update_action",
-  getById = "get_action_by_id",
-  delete = "delete_action",
-  search = "search_action",
-  count = "count_action",
-  getFeatureAction = "get_feature_action"
-}
-
 export default class ActionRepository extends Repository {
   async create(params: {
     name: string
@@ -18,7 +8,7 @@ export default class ActionRepository extends Repository {
   }): Promise<{ create_action: number }> {
     try {
       return await this.call<{ create_action: number }>(
-        actionProcedures.create,
+        "create_action",
         postgresStringfy(params.name),
         postgresStringfy(params.canonical),
         params.createdBy
@@ -36,7 +26,7 @@ export default class ActionRepository extends Repository {
   }): Promise<{ update_action: number }> {
     try {
       return await this.call<{ update_action: number }>(
-        actionProcedures.update,
+        "update_action",
         params.id,
         postgresStringfy(params.name),
         postgresStringfy(params.canonical),
@@ -69,7 +59,7 @@ export default class ActionRepository extends Repository {
         updatedid: number
         updatedname: string
         updatedat: string
-      }>(actionProcedures.getById, params.id)
+      }>("get_action_by_id", params.id)
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -81,7 +71,7 @@ export default class ActionRepository extends Repository {
   }): Promise<{ delete_action: number }> {
     try {
       return await this.call<{ delete_action: number }>(
-        actionProcedures.delete,
+        "delete_action",
         params.id,
         params.deletedBy
       )
@@ -98,7 +88,7 @@ export default class ActionRepository extends Repository {
   }): Promise<{ id: number; name: string; canonical: string }[]> {
     try {
       return await this.list<{ id: number; name: string; canonical: string }[]>(
-        actionProcedures.search,
+        "search_action",
         postgresStringfy(params.name),
         postgresStringfy(params.canonical),
         params.limit,
@@ -115,7 +105,7 @@ export default class ActionRepository extends Repository {
   }): Promise<{ count_action: number }> {
     try {
       return await this.call<{ count_action: number }>(
-        actionProcedures.count,
+        "count_action",
         postgresStringfy(params.name),
         postgresStringfy(params.canonical)
       )
@@ -129,7 +119,7 @@ export default class ActionRepository extends Repository {
   }): Promise<{ id: number; name: string }[]> {
     try {
       return await this.list<{ id: number; name: string }[]>(
-        actionProcedures.getFeatureAction,
+        "get_feature_action",
         params.featureId
       )
     } catch (error: any) {

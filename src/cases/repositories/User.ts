@@ -1,21 +1,4 @@
 import { postgresStringfy, Repository } from "../types"
-export enum userProcedures {
-  create = "create_user",
-  update = "update_user",
-  getById = "get_user_by_id",
-  delete = "delete_user",
-  search = "search_users",
-  count = "count_users",
-  verifyIfExistEmail = "verify_if_exist_email",
-  verifyIfExistCpf = "verify_if_exist_cpf",
-  getByEmail = "get_user_id_byemail",
-  getByCpf = "get_user_id_bycpf",
-  getByCellphone = "get_user_id_bycellphone",
-  getUserToAuthentication = "get_user_to_authentication",
-  updateForRecovery = "update_for_recovery",
-  updateForConfirmation = "update_for_Confirmation",
-  createUserForInitialize = "create_user_for_initialize"
-}
 
 class Nullify {
   private content: string | null
@@ -58,7 +41,7 @@ export default class UserRepository extends Repository {
   }): Promise<{ create_user: number }> {
     try {
       return await this.call<{ create_user: number }>(
-        userProcedures.create,
+        "create_user",
         params.super,
         params.groupId,
         postgresStringfy(params.password),
@@ -99,7 +82,7 @@ export default class UserRepository extends Repository {
   }): Promise<{ update_user: number }> {
     try {
       return await this.call<{ update_user: number }>(
-        userProcedures.update,
+        "update_user",
         params.id,
         params.super,
         params.groupId,
@@ -173,7 +156,7 @@ export default class UserRepository extends Repository {
         estateIbge: number
         estateName: string
         acronym: string
-      }>(userProcedures.getById, params.id)
+      }>("get_user_by_id", params.id)
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -184,11 +167,7 @@ export default class UserRepository extends Repository {
     deletedBy: number
   }): Promise<{ delete_user: number }> {
     try {
-      return await this.call<any>(
-        userProcedures.delete,
-        params.id,
-        params.deletedBy
-      )
+      return await this.call<any>("delete_user", params.id, params.deletedBy)
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -234,7 +213,7 @@ export default class UserRepository extends Repository {
           cellphone: string
         }[]
       >(
-        userProcedures.search,
+        "search_users",
         postgresStringfy(params.name),
         postgresStringfy(params.email),
         postgresStringfy(params.cpf),
@@ -265,7 +244,7 @@ export default class UserRepository extends Repository {
   }): Promise<{ count_users: number }> {
     try {
       return await this.call<{ count_users: number }>(
-        userProcedures.count,
+        "count_users",
         postgresStringfy(params.name),
         postgresStringfy(params.email),
         postgresStringfy(params.cpf),
@@ -285,7 +264,7 @@ export default class UserRepository extends Repository {
   }): Promise<{ verify_if_exist_email: number }> {
     try {
       return await this.call<{ verify_if_exist_email: number }>(
-        userProcedures.verifyIfExistEmail,
+        "verify_if_exist_email",
         postgresStringfy(params.email)
       )
     } catch (error: any) {
@@ -298,7 +277,7 @@ export default class UserRepository extends Repository {
   }): Promise<{ verify_if_exist_cpf: number }> {
     try {
       return await this.call<{ verify_if_exist_cpf: number }>(
-        userProcedures.verifyIfExistCpf,
+        "verify_if_exist_cpf",
         postgresStringfy(params.cpf)
       )
     } catch (error: any) {
@@ -309,7 +288,7 @@ export default class UserRepository extends Repository {
   async getByEmail(params: { email: string }): Promise<{ id: number }> {
     try {
       return await this.call<{ id: number }>(
-        userProcedures.getByEmail,
+        "get_user_id_byemail",
         postgresStringfy(params.email)
       )
     } catch (error: any) {
@@ -320,7 +299,7 @@ export default class UserRepository extends Repository {
   async getByCpf(params: { cpf: string }): Promise<{ id: number }> {
     try {
       return await this.call<{ id: number }>(
-        userProcedures.getByCpf,
+        "get_user_id_bycpf",
         postgresStringfy(params.cpf)
       )
     } catch (error: any) {
@@ -331,7 +310,7 @@ export default class UserRepository extends Repository {
   async getByCellphone(params: { cellphone: string }): Promise<{ id: number }> {
     try {
       return await this.call<{ id: number }>(
-        userProcedures.getByCellphone,
+        "get_user_id_bycellphone",
         postgresStringfy(params.cellphone)
       )
     } catch (error: any) {
@@ -405,7 +384,7 @@ export default class UserRepository extends Repository {
             canonical: string
           }[]
         }[]
-      }>(userProcedures.getUserToAuthentication, params.id)
+      }>("get_user_to_authentication", params.id)
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -417,7 +396,7 @@ export default class UserRepository extends Repository {
   }): Promise<{ update_for_recovery: number }> {
     try {
       return await this.call<{ update_for_recovery: number }>(
-        userProcedures.updateForRecovery,
+        "update_for_recovery",
         params.userId,
         params.hash
       )
@@ -432,7 +411,7 @@ export default class UserRepository extends Repository {
   }): Promise<{ update_for_Confirmation: number }> {
     try {
       return await this.call<{ update_for_Confirmation: number }>(
-        userProcedures.updateForConfirmation,
+        "update_for_Confirmation",
         params.userId,
         params.hash
       )
@@ -441,10 +420,12 @@ export default class UserRepository extends Repository {
     }
   }
 
-  async createUserForInitialize(): Promise<{ create_user_for_initialize: number }> {
+  async createUserForInitialize(): Promise<{
+    create_user_for_initialize: number
+  }> {
     try {
       return await this.call<{ create_user_for_initialize: number }>(
-        userProcedures.create
+        "create_user_for_initialize"
       )
     } catch (error: any) {
       throw new Error(error.message)

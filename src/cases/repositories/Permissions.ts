@@ -1,9 +1,5 @@
 import { postgresArrayTreatment, Repository } from "../types"
-export enum permissionsProcedures {
-  create = "create_permission",
-  getPermissions = "get_permissions",
-  getAdminsPermissions = "get_admins_permission"
-}
+
 export default class PermissionRepository extends Repository {
   async create(params: {
     userId: number
@@ -13,7 +9,7 @@ export default class PermissionRepository extends Repository {
   }): Promise<{ create_permission: number }> {
     try {
       return await this.call<{ create_permission: number }>(
-        permissionsProcedures.create,
+        "create_permission",
         params.userId,
         params.featureId,
         params.createdBy,
@@ -50,7 +46,7 @@ export default class PermissionRepository extends Repository {
           featuredeviceid: number
           actions: { id: number; name: string; canonical: string }[]
         }[]
-      >(permissionsProcedures.getPermissions, params.userId)
+      >("get_permissions", params.userId)
     } catch (error: any) {
       throw new Error(error.message)
     }
@@ -82,7 +78,7 @@ export default class PermissionRepository extends Repository {
           featuredeviceid: number
           actions: { id: number; name: string; canonical: string }[]
         }[]
-      >(permissionsProcedures.getAdminsPermissions)
+      >("get_admins_permission")
     } catch (error: any) {
       throw new Error(error.message)
     }
