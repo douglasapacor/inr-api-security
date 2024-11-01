@@ -23,11 +23,23 @@ export default function wrapper(attr: attributes) {
         groupName: string
         groupSuper: boolean
         credentials: Record<string, string[]>
+        needChange: boolean
       } = JSON.parse(
         verify(req.headers["authorization"], application.key).toString()
       )
 
       if (!credential) throw new Error("Não autorizado")
+
+      if (credential.needChange) {
+        res.status(200).json({
+          success: false,
+          data: {
+            needChange: true,
+            credential: req.headers["authorization"]
+          },
+          message: "Usuário precisa alterar a senha."
+        })
+      }
 
       req.user.id = credential.id
 

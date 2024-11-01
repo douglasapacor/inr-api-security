@@ -43,6 +43,7 @@ export default class UserService {
       const hash = await hashSync(randomPass, salt)
 
       const user = await this.userRepository.create({
+        needChange: true,
         super: params.super,
         active: params.active,
         groupId: params.groupId,
@@ -246,7 +247,7 @@ export default class UserService {
 
       rawToken.id = userId
       rawToken.super = userFinded.super
-      rawToken.name = userFinded.name
+      rawToken.name = userFinded.userName
       rawToken.groupId = userFinded.groupId
       rawToken.groupName = userFinded.groupCanonicalName
       rawToken.groupSuper = userFinded.groupSuper
@@ -274,11 +275,11 @@ export default class UserService {
       return {
         success: true,
         data: {
-          name: userFinded.name,
+          name: userFinded.userName,
           email: userFinded.email,
           cellphone: userFinded.cellphone,
           group: {
-            name: userFinded.groupCanonicalName,
+            name: userFinded.groupName,
             canonical: userFinded.groupCanonicalName
           },
           credential: token,

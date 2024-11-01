@@ -4,7 +4,6 @@ import ActionRepository from "../cases/repositories/Action"
 import ActionService from "../cases/services/Action"
 import ActionController from "../cases/controllers/Action"
 const actionRoute = express.Router()
-
 const actionRepository = new ActionRepository()
 const actionService = new ActionService(actionRepository)
 const actionController = new ActionController(actionService)

@@ -168,11 +168,9 @@ export default class GroupRepository extends Repository {
     }
   }
 
-  async createGroupForInitialize(): Promise<{
-    create_group_for_initialize: number
-  }> {
+  async initializeGroup(): Promise<{ initialize_group: number }> {
     try {
-      return this.call("create_group_for_initialize")
+      return this.call("initialize_group")
     } catch (error: any) {
       throw new Error(error.message)
     }

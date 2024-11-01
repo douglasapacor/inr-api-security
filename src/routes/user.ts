@@ -5,7 +5,9 @@ import UserService from "../cases/services/User"
 import UserRepository from "../cases/repositories/User"
 import EmailProvider from "../cases/providers/Email"
 import PermissionRepository from "../cases/repositories/Permissions"
+
 const userRoute = express.Router()
+
 const userRepository = new UserRepository()
 const emailProvider = new EmailProvider()
 const permissionRepository = new PermissionRepository()

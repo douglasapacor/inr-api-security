@@ -24,6 +24,7 @@ export default class UserRepository extends Repository {
     groupId: number
     password: string
     active: boolean
+    needChange: boolean
     createdBy: number
     name: string
     email: string
@@ -46,6 +47,7 @@ export default class UserRepository extends Repository {
         params.groupId,
         postgresStringfy(params.password),
         params.active,
+        params.needChange,
         params.createdBy,
         postgresStringfy(params.name),
         postgresStringfy(params.email),
@@ -328,7 +330,7 @@ export default class UserRepository extends Repository {
     groupName: string
     groupCanonicalName: string
     groupSuper: boolean
-    name: string
+    userName: string
     email: string
     cpf: string
     rg: string
@@ -362,7 +364,7 @@ export default class UserRepository extends Repository {
         groupName: string
         groupCanonicalName: string
         groupSuper: boolean
-        name: string
+        userName: string
         email: string
         cpf: string
         rg: string
@@ -420,12 +422,26 @@ export default class UserRepository extends Repository {
     }
   }
 
-  async createUserForInitialize(): Promise<{
+  async createUserForInitialize(params: { groupId: number }): Promise<{
     create_user_for_initialize: number
   }> {
     try {
       return await this.call<{ create_user_for_initialize: number }>(
-        "create_user_for_initialize"
+        "create_user_for_initialize",
+        params.groupId
+      )
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+
+  async registerFirstUser(params: {
+    firstUserId: number
+  }): Promise<{ register_first_user: string }> {
+    try {
+      return await this.call<{ register_first_user: string }>(
+        "register_first_user",
+        params.firstUserId
       )
     } catch (error: any) {
       throw new Error(error.message)
