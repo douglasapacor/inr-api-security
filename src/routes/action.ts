@@ -21,7 +21,7 @@ actionRoute.post(
       )
       next()
     },
-    settings: { level: "free" }
+    settings: { level: "full" }
   })
 )
 
@@ -40,7 +40,7 @@ actionRoute.post(
       next()
     },
     settings: {
-      level: "free"
+      level: "full"
     }
   })
 )
@@ -76,7 +76,7 @@ actionRoute.put(
       )
       next()
     },
-    settings: { level: "free" }
+    settings: { level: "full" }
   })
 )
 
@@ -93,7 +93,7 @@ actionRoute.delete(
       next()
     },
     settings: {
-      level: "free"
+      level: "full"
     }
   })
 )

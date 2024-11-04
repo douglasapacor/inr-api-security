@@ -245,7 +245,7 @@ export default class UserService {
 
       let access = []
 
-      rawToken.id = userId
+      rawToken.id = userId.id
       rawToken.super = userFinded.super
       rawToken.name = userFinded.userName
       rawToken.groupId = userFinded.groupId
@@ -278,6 +278,7 @@ export default class UserService {
           name: userFinded.userName,
           email: userFinded.email,
           cellphone: userFinded.cellphone,
+          photo: "",
           group: {
             name: userFinded.groupName,
             canonical: userFinded.groupCanonicalName

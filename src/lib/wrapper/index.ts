@@ -15,17 +15,9 @@ export default function wrapper(attr: attributes) {
 
       if (!req.headers["authorization"]) throw new Error("Não autorizado")
 
-      const credential: {
-        id: number
-        super: boolean
-        name: string
-        groupId: number
-        groupName: string
-        groupSuper: boolean
-        credentials: Record<string, string[]>
-        needChange: boolean
-      } = JSON.parse(
-        verify(req.headers["authorization"], application.key).toString()
+      const credential: any = verify(
+        req.headers["authorization"],
+        application.key
       )
 
       if (!credential) throw new Error("Não autorizado")
@@ -41,7 +33,9 @@ export default function wrapper(attr: attributes) {
         })
       }
 
-      req.user.id = credential.id
+      req.user = {
+        id: credential.id
+      }
 
       if (credential.groupSuper && credential.super)
         return await attr.handle(req, res, next)
@@ -55,7 +49,7 @@ export default function wrapper(attr: attributes) {
       if (attr.settings.level === "controlled")
         return await attr.handle(req, res, next)
 
-      const selectedFeature =
+      const selectedFeature: any =
         credential.credentials[`${attr.settings.featureCode}`]
 
       if (!selectedFeature || selectedFeature.length <= 0)
@@ -64,7 +58,7 @@ export default function wrapper(attr: attributes) {
       if (!attr.settings.action) throw new Error("Não autorizado")
 
       const hasAction = selectedFeature.findIndex(
-        i => i === attr.settings.action
+        (i: any) => i === attr.settings.action
       )
 
       if (hasAction < 0) throw new Error("Não autorizado")
