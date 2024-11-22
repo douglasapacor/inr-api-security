@@ -104,6 +104,7 @@ export default class ActionService {
   async delete(params: commonDeleteServiceProps): Promise<defaultResponse> {
     try {
       const response = await this.actionRepository.delete(params)
+
       if (response.delete_action <= 0) throw new Error("Não houve alterações")
 
       return {

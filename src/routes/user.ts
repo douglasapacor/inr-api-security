@@ -16,6 +16,7 @@ const userService = new UserService(
   emailProvider,
   permissionRepository
 )
+
 const userController = new UserController(userService)
 
 userRoute.post(

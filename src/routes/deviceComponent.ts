@@ -26,7 +26,7 @@ deviceComponentRoute.post(
 
       next()
     },
-    settings: { level: "free" }
+    settings: { level: "full" }
   })
 )
 
@@ -45,7 +45,7 @@ deviceComponentRoute.post(
       next()
     },
     settings: {
-      level: "free"
+      level: "full"
     }
   })
 )
@@ -62,7 +62,7 @@ deviceComponentRoute.get(
       next()
     },
     settings: {
-      level: "free"
+      level: "full"
     }
   })
 )
@@ -81,7 +81,7 @@ deviceComponentRoute.put(
       )
       next()
     },
-    settings: { level: "free" }
+    settings: { level: "full" }
   })
 )
 
@@ -98,7 +98,7 @@ deviceComponentRoute.delete(
       next()
     },
     settings: {
-      level: "free"
+      level: "full"
     }
   })
 )

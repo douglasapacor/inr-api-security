@@ -57,7 +57,7 @@ actionRoute.get(
       next()
     },
     settings: {
-      level: "free"
+      level: "full"
     }
   })
 )

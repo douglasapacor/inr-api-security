@@ -24,6 +24,11 @@ app.use((req, _, next) => {
 app.use(router)
 app.use((req, _, next) => {
   req.meta.finish = new Date().getMilliseconds()
+  console.log(
+    `"${req.path}" | ${req.meta.method} | ${
+      (req.meta.finish - req.meta.start) / 1000
+    } second(s)`
+  )
   next()
 })
 
