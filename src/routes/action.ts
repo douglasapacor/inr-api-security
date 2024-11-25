@@ -19,7 +19,6 @@ actionRoute.post(
           createdBy: +req.user.id
         })
       )
-      next()
     },
     settings: { level: "full" }
   })
@@ -37,7 +36,18 @@ actionRoute.post(
           offset: req.body.offset
         })
       )
-      next()
+    },
+    settings: {
+      level: "full"
+    }
+  })
+)
+
+actionRoute.get(
+  "/get-all",
+  wrapper({
+    handle: async (req, res, next) => {
+      res.status(200).json(await actionController.getAll())
     },
     settings: {
       level: "full"
@@ -49,12 +59,13 @@ actionRoute.get(
   "/:id",
   wrapper({
     handle: async (req, res, next) => {
+      console.log("rota id")
+
       res.status(200).json(
         await actionController.getById({
           id: +req.params.id
         })
       )
-      next()
     },
     settings: {
       level: "full"
@@ -74,7 +85,6 @@ actionRoute.put(
           updatedBy: +req.user.id
         })
       )
-      next()
     },
     settings: { level: "full" }
   })
@@ -90,7 +100,6 @@ actionRoute.delete(
           deletedBy: +req.user.id
         })
       )
-      next()
     },
     settings: {
       level: "full"

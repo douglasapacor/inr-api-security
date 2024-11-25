@@ -15,7 +15,24 @@ export default class FeatureService {
 
   async create(params: createFeatureServiceProps): Promise<defaultResponse> {
     try {
-      const feature = await this.featureRepository.create(params)
+      const actions: number[] = []
+
+      for (let i = 0; i < params.actions.length; i++) {
+        if (params.actions[i].checked) actions.push(params.actions[i].id)
+      }
+
+      const feature = await this.featureRepository.create({
+        actions,
+        active: params.active,
+        canonical: params.canonical,
+        createdBy: params.createdBy,
+        name: params.name,
+        visible: params.visible,
+        deviceComponentsId: params.deviceComponentsId,
+        icon: params.icon,
+        path: params.path
+      })
+
       return {
         success: true,
         message: "Recurso criado com sucesso.",
@@ -31,7 +48,23 @@ export default class FeatureService {
 
   async update(params: updateFeatureServiceProps): Promise<defaultResponse> {
     try {
-      const response = await this.featureRepository.update(params)
+      const actions: number[] = []
+
+      for (let i = 0; i < params.actions.length; i++) {
+        if (params.actions[i].checked) actions.push(params.actions[i].id)
+      }
+      const response = await this.featureRepository.update({
+        id: params.id,
+        actions,
+        active: params.active,
+        canonical: params.canonical,
+        updatedBy: params.updatedBy,
+        name: params.name,
+        visible: params.visible,
+        deviceComponentsId: params.deviceComponentsId,
+        icon: params.icon,
+        path: params.path
+      })
       if (response.update_feature <= 0) throw new Error("Não houve alterações")
 
       return {

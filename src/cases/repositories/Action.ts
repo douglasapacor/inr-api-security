@@ -126,4 +126,14 @@ export default class ActionRepository extends Repository {
       throw new Error(error.message)
     }
   }
+
+  async getAll(): Promise<{ id: number; name: string; canonical: string }[]> {
+    try {
+      return await this.list<{ id: number; name: string; canonical: string }[]>(
+        "get_all_action"
+      )
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
 }

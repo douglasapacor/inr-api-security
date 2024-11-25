@@ -24,7 +24,15 @@ export const updateFeatureValidation = z.object({
     else return device
   }),
   updatedBy: z.number(),
-  actions: z.array(z.number())
+  actions: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
+      canonical: z.string(),
+      checked: z.boolean()
+    }),
+    { message: "Ações" }
+  )
 })
 
 export type updateFeatureControllerProps = z.input<

@@ -23,8 +23,6 @@ deviceComponentRoute.post(
           createdBy: +req.user.id
         })
       )
-
-      next()
     },
     settings: { level: "full" }
   })
@@ -42,7 +40,6 @@ deviceComponentRoute.post(
           offset: req.body.offset
         })
       )
-      next()
     },
     settings: {
       level: "full"
@@ -59,7 +56,6 @@ deviceComponentRoute.get(
           id: +req.params.id
         })
       )
-      next()
     },
     settings: {
       level: "full"
@@ -79,7 +75,6 @@ deviceComponentRoute.put(
           updatedBy: +req.user.id
         })
       )
-      next()
     },
     settings: { level: "full" }
   })
@@ -95,7 +90,6 @@ deviceComponentRoute.delete(
           deletedBy: +req.user.id
         })
       )
-      next()
     },
     settings: {
       level: "full"

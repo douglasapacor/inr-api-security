@@ -19,8 +19,18 @@ export const createFeatureValidation = z.object({
     .optional(),
   visible: z.boolean(),
   deviceComponentsId: z.number().optional(),
-  createdBy: z.number(),
-  actions: z.array(z.number())
+  createdBy: z.number({
+    message: "Idenficação do usuário ausente"
+  }),
+  actions: z.array(
+    z.object({
+      id: z.number(),
+      name: z.string(),
+      canonical: z.string(),
+      checked: z.boolean()
+    }),
+    { message: "Ações" }
+  )
 })
 
 export type createFeatureControllerProps = z.input<

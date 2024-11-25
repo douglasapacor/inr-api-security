@@ -28,9 +28,8 @@ featureRoute.post(
           path: req.body.path
         })
       )
-      next()
     },
-    settings: { level: "free" }
+    settings: { level: "full" }
   })
 )
 
@@ -51,10 +50,9 @@ featureRoute.post(
           offset: req.body.offset
         })
       )
-      next()
     },
     settings: {
-      level: "free"
+      level: "full"
     }
   })
 )
@@ -68,10 +66,9 @@ featureRoute.get(
           id: +req.params.id
         })
       )
-      next()
     },
     settings: {
-      level: "free"
+      level: "full"
     }
   })
 )
@@ -94,9 +91,8 @@ featureRoute.put(
           path: req.body.path
         })
       )
-      next()
     },
-    settings: { level: "free" }
+    settings: { level: "full" }
   })
 )
 
@@ -110,10 +106,9 @@ featureRoute.delete(
           deletedBy: +req.user.id
         })
       )
-      next()
     },
     settings: {
-      level: "free"
+      level: "full"
     }
   })
 )

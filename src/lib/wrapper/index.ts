@@ -9,6 +9,16 @@ export default function wrapper(attr: attributes) {
     next: NextFunction
   ): Promise<void> => {
     try {
+      res.on("finish", () => {
+        req.meta.finish = new Date().getMilliseconds()
+
+        console.log(
+          `"${req.path}" | ${req.meta.method} | ${
+            (req.meta.finish - req.meta.start) / 1000
+          } second(s)`
+        )
+      })
+
       if (attr.settings.level === "free") {
         return await attr.handle(req, res, next)
       }

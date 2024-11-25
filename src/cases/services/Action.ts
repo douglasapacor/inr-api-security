@@ -118,4 +118,20 @@ export default class ActionService {
       }
     }
   }
+
+  async getAll(): Promise<defaultResponse> {
+    try {
+      const actions = await this.actionRepository.getAll()
+
+      return {
+        success: true,
+        data: actions
+      }
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message
+      }
+    }
+  }
 }

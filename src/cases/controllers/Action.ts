@@ -103,4 +103,15 @@ export default class ActionController {
       }
     }
   }
+
+  async getAll(): Promise<defaultResponse> {
+    try {
+      return await this.actionComponentService.getAll()
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message
+      }
+    }
+  }
 }
