@@ -14,7 +14,7 @@ const featureController = new FeatureController(featureService)
 featureRoute.post(
   "/new",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await featureController.create({
           name: req.body.name,
@@ -36,7 +36,7 @@ featureRoute.post(
 featureRoute.post(
   "/",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await featureController.search({
           name: req.body.name,
@@ -60,7 +60,7 @@ featureRoute.post(
 featureRoute.get(
   "/:id",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await featureController.getById({
           id: +req.params.id
@@ -73,10 +73,26 @@ featureRoute.get(
   })
 )
 
+featureRoute.get(
+  "/actions/:id",
+  wrapper({
+    handle: async (req, res) => {
+      res.status(200).json(
+        await featureController.getFeaturesActions({
+          id: +req.params.id
+        })
+      )
+    },
+    settings: {
+      level: "free"
+    }
+  })
+)
+
 featureRoute.put(
   "/:id/update",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await featureController.update({
           id: +req.params.id,
@@ -99,7 +115,7 @@ featureRoute.put(
 featureRoute.delete(
   "/:id/delete",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await featureController.delete({
           id: +req.params.id,

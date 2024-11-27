@@ -20,7 +20,7 @@ export default class UserService {
     private userRepository: UserRepository,
     private emailProvider: EmailProvider,
     private permissionRepository: PermissionRepository
-  ) {}
+  ) { }
 
   async create(params: createUserServiceProps): Promise<defaultResponse> {
     try {

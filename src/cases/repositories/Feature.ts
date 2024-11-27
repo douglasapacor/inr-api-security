@@ -206,4 +206,17 @@ export class FeatureRepository extends Repository {
       throw new Error(error.message)
     }
   }
+
+  async getFeaturesActions(params: {
+    featureId: number
+  }): Promise<{ actionId: number }[]> {
+    try {
+      return await this.list<{ actionId: number }[]>(
+        "get_features_actions",
+        params.featureId
+      )
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
 }
