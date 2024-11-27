@@ -11,7 +11,7 @@ export default class FeatureService {
   constructor(
     private featureRepository: FeatureRepository,
     private actionRepository: ActionRepository
-  ) { }
+  ) {}
 
   async create(params: createFeatureServiceProps): Promise<defaultResponse> {
     try {
@@ -155,7 +155,9 @@ export default class FeatureService {
     }
   }
 
-  async getFeaturesActions(params: getByIdServiceProps): Promise<defaultResponse> {
+  async getFeaturesActions(
+    params: getByIdServiceProps
+  ): Promise<defaultResponse> {
     try {
       const list = await this.featureRepository.getFeaturesActions({
         featureId: params.id
@@ -164,6 +166,21 @@ export default class FeatureService {
       return {
         success: true,
         data: list
+      }
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message
+      }
+    }
+  }
+
+  async getAllFeatures(): Promise<defaultResponse> {
+    try {
+      const response = await this.featureRepository.getAllFeatures()
+      return {
+        success: true,
+        data: response
       }
     } catch (error: any) {
       return {

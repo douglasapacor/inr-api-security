@@ -3,25 +3,19 @@ import { verify } from "jsonwebtoken"
 import type { attributes } from "./types"
 import application from "../../config/application"
 export default function wrapper(attr: attributes) {
-  return async (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> => {
+  return async (req: Request, res: Response): Promise<void> => {
     try {
       res.on("finish", () => {
         req.meta.finish = new Date().getMilliseconds()
 
         console.log(
-          `"${req.path}" | ${req.meta.method} | ${
+          `"${req.baseUrl}${req.path}" | ${req.meta.method} | ${
             (req.meta.finish - req.meta.start) / 1000
           } second(s)`
         )
       })
 
-      if (attr.settings.level === "free") {
-        return await attr.handle(req, res, next)
-      }
+      if (attr.settings.level === "free") return await attr.handle(req, res)
 
       if (!req.headers["authorization"]) throw new Error("Não autorizado")
 
@@ -48,7 +42,7 @@ export default function wrapper(attr: attributes) {
       }
 
       if (credential.groupSuper && credential.super)
-        return await attr.handle(req, res, next)
+        return await attr.handle(req, res)
 
       const allowedGroup = attr.settings.groupCode?.findIndex(
         item => item === credential.groupName
@@ -57,7 +51,7 @@ export default function wrapper(attr: attributes) {
       if (!allowedGroup || allowedGroup < 0) throw new Error("Não autorizado")
 
       if (attr.settings.level === "controlled")
-        return await attr.handle(req, res, next)
+        return await attr.handle(req, res)
 
       const selectedFeature: any =
         credential.credentials[`${attr.settings.featureCode}`]
@@ -73,7 +67,7 @@ export default function wrapper(attr: attributes) {
 
       if (hasAction < 0) throw new Error("Não autorizado")
 
-      return await attr.handle(req, res, next)
+      return await attr.handle(req, res)
     } catch (error: any) {
       res.status(200).json({
         success: false,

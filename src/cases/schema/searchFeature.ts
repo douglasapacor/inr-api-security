@@ -13,11 +13,20 @@ export const searchFeatureValidation = z.object({
   icon: z
     .string()
     .max(100, { message: "icone pode contar até 100 caracteres." }),
-  visible: z.boolean(),
-  deviceComponentsId: z.number().transform(device => {
-    if (device <= 0) return "NULL"
-    else return device
-  }),
+  visible: z
+    .boolean()
+    .optional()
+    .transform(visible => {
+      if (visible === undefined) return "NULL"
+      else return visible
+    }),
+  deviceComponentsId: z
+    .number()
+    .optional()
+    .transform(device => {
+      if (device === undefined || device <= 0) return "NULL"
+      else return device
+    }),
   limit: z.number(),
   offset: z.number()
 })

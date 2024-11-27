@@ -22,7 +22,7 @@ const userController = new UserController(userService)
 userRoute.post(
   "/new",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await userController.create({
           name: req.body.name,
@@ -38,7 +38,6 @@ userRoute.post(
           createdById: +req.user.id
         })
       )
-      next()
     },
     settings: {
       level: "free"
@@ -49,13 +48,12 @@ userRoute.post(
 userRoute.get(
   "/:id",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await userController.getById({
           id: +req.params.id
         })
       )
-      next()
     },
     settings: {
       level: "free"
@@ -66,7 +64,7 @@ userRoute.get(
 userRoute.put(
   "/:id/update",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await userController.update({
           id: +req.params.id,
@@ -83,7 +81,6 @@ userRoute.put(
           permissions: req.body.permissions
         })
       )
-      next()
     },
     settings: {
       level: "free"
@@ -94,14 +91,13 @@ userRoute.put(
 userRoute.delete(
   "/:id/delete",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await userController.delete({
           id: +req.params.id,
           deletedBy: +req.user.id
         })
       )
-      next()
     },
     settings: {
       level: "free"
@@ -112,7 +108,7 @@ userRoute.delete(
 userRoute.post(
   "/",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await userController.search({
           name: req.body.name,
@@ -127,7 +123,6 @@ userRoute.post(
           offset: req.body.offset
         })
       )
-      next()
     },
     settings: {
       level: "free"
@@ -138,14 +133,13 @@ userRoute.post(
 userRoute.post(
   "/authentication",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await userController.authentication({
           login: req.body.login,
           password: req.body.password
         })
       )
-      next()
     },
     settings: {
       level: "free"
@@ -156,13 +150,12 @@ userRoute.post(
 userRoute.post(
   "/recovery_password",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await userController.recoveryPassword({
           login: req.params.login
         })
       )
-      next()
     },
     settings: {
       level: "free"
@@ -173,7 +166,7 @@ userRoute.post(
 userRoute.post(
   "/confirm_recovery",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await userController.confirmRecovery({
           user: req.body.user,
@@ -181,7 +174,6 @@ userRoute.post(
           newPassword: req.body.newPassword
         })
       )
-      next()
     },
     settings: {
       level: "free"

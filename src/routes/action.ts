@@ -11,7 +11,7 @@ const actionController = new ActionController(actionService)
 actionRoute.post(
   "/new",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await actionController.create({
           name: req.body.name,
@@ -20,14 +20,14 @@ actionRoute.post(
         })
       )
     },
-    settings: { level: "full" }
+    settings: { level: "full", featureCode: "action", action: "write" }
   })
 )
 
 actionRoute.post(
   "/",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await actionController.search({
           name: req.body.name,
@@ -38,7 +38,9 @@ actionRoute.post(
       )
     },
     settings: {
-      level: "full"
+      level: "full",
+      featureCode: "action",
+      action: "read"
     }
   })
 )
@@ -46,11 +48,13 @@ actionRoute.post(
 actionRoute.get(
   "/get-all",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(await actionController.getAll())
     },
     settings: {
-      level: "full"
+      level: "full",
+      featureCode: "action",
+      action: "read"
     }
   })
 )
@@ -58,9 +62,7 @@ actionRoute.get(
 actionRoute.get(
   "/:id",
   wrapper({
-    handle: async (req, res, next) => {
-      console.log("rota id")
-
+    handle: async (req, res) => {
       res.status(200).json(
         await actionController.getById({
           id: +req.params.id
@@ -68,7 +70,9 @@ actionRoute.get(
       )
     },
     settings: {
-      level: "full"
+      level: "full",
+      featureCode: "action",
+      action: "read"
     }
   })
 )
@@ -76,7 +80,7 @@ actionRoute.get(
 actionRoute.put(
   "/:id/update",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await actionController.update({
           id: +req.params.id,
@@ -86,14 +90,14 @@ actionRoute.put(
         })
       )
     },
-    settings: { level: "full" }
+    settings: { level: "full", featureCode: "action", action: "write" }
   })
 )
 
 actionRoute.delete(
   "/:id/delete",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await actionController.delete({
           id: +req.params.id,
@@ -102,7 +106,9 @@ actionRoute.delete(
       )
     },
     settings: {
-      level: "full"
+      level: "full",
+      featureCode: "action",
+      action: "write"
     }
   })
 )

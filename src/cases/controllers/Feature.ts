@@ -22,7 +22,7 @@ import {
 } from "../schema/updateFeature"
 
 export default class FeatureController {
-  constructor(private featureService: FeatureService) { }
+  constructor(private featureService: FeatureService) {}
 
   async create(params: createFeatureControllerProps): Promise<defaultResponse> {
     try {
@@ -104,7 +104,9 @@ export default class FeatureController {
     }
   }
 
-  async getFeaturesActions(params: getByIdControllerProps): Promise<defaultResponse> {
+  async getFeaturesActions(
+    params: getByIdControllerProps
+  ): Promise<defaultResponse> {
     try {
       const validation = await getByIdValidation.safeParseAsync(params)
 
@@ -112,6 +114,17 @@ export default class FeatureController {
         throw new Error(validation.error.issues[0].message)
 
       return await this.featureService.getFeaturesActions(validation.data)
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message
+      }
+    }
+  }
+
+  async getAllFeatures(): Promise<defaultResponse> {
+    try {
+      return await this.featureService.getAllFeatures()
     } catch (error: any) {
       return {
         success: false,

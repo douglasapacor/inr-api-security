@@ -14,7 +14,7 @@ const groupController = new GroupController(groupService)
 groupRoute.post(
   "/new",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await groupController.create({
           name: req.body.name,
@@ -26,16 +26,15 @@ groupRoute.post(
           color: req.body.color
         })
       )
-      next()
     },
-    settings: { level: "free" }
+    settings: { level: "full" }
   })
 )
 
 groupRoute.post(
   "/",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await groupController.search({
           active: req.body.active,
@@ -48,7 +47,6 @@ groupRoute.post(
           offset: req.body.offset
         })
       )
-      next()
     },
     settings: {
       level: "free"
@@ -59,13 +57,12 @@ groupRoute.post(
 groupRoute.get(
   "/:id",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await groupController.getById({
           id: +req.params.id
         })
       )
-      next()
     },
     settings: {
       level: "free"
@@ -76,7 +73,7 @@ groupRoute.get(
 groupRoute.put(
   "/:id/update",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await groupController.update({
           id: +req.params.id,
@@ -89,7 +86,6 @@ groupRoute.put(
           color: req.body.color
         })
       )
-      next()
     },
     settings: { level: "free" }
   })
@@ -98,14 +94,13 @@ groupRoute.put(
 groupRoute.delete(
   "/:id/delete",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await groupController.delete({
           id: +req.params.id,
           deletedBy: +req.user.id
         })
       )
-      next()
     },
     settings: {
       level: "free"

@@ -122,7 +122,7 @@ export class FeatureRepository extends Repository {
     active: boolean
     icon: string
     path: string
-    visible: boolean
+    visible: boolean | "NULL"
     deviceComponentsId: number | "NULL"
     limit: number
     offset: number
@@ -175,7 +175,7 @@ export class FeatureRepository extends Repository {
     active: boolean
     path: string
     icon: string
-    visible: boolean
+    visible: boolean | "NULL"
     deviceComponentsId: number | "NULL"
   }): Promise<{ count_feature: number }> {
     try {
@@ -215,6 +215,32 @@ export class FeatureRepository extends Repository {
         "get_features_actions",
         params.featureId
       )
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
+
+  async getAllFeatures(): Promise<
+    {
+      id: number
+      name: string
+      icon: string
+      path: string
+      visible: boolean
+      deviceComponentsName: string
+    }[]
+  > {
+    try {
+      return await this.list<
+        {
+          id: number
+          name: string
+          icon: string
+          path: string
+          visible: boolean
+          deviceComponentsName: string
+        }[]
+      >("get_all_features")
     } catch (error: any) {
       throw new Error(error.message)
     }

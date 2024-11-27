@@ -6,6 +6,7 @@ import FeatureController from "../cases/controllers/Feature"
 import ActionRepository from "../cases/repositories/Action"
 
 const featureRoute = express.Router()
+
 const featureRepository = new FeatureRepository()
 const actionRepository = new ActionRepository()
 const featureService = new FeatureService(featureRepository, actionRepository)
@@ -29,7 +30,11 @@ featureRoute.post(
         })
       )
     },
-    settings: { level: "full" }
+    settings: {
+      level: "full",
+      featureCode: "feature",
+      action: "write"
+    }
   })
 )
 
@@ -52,7 +57,23 @@ featureRoute.post(
       )
     },
     settings: {
-      level: "full"
+      level: "full",
+      featureCode: "feature",
+      action: "read"
+    }
+  })
+)
+
+featureRoute.get(
+  "/get-all",
+  wrapper({
+    handle: async (req, res) => {
+      res.status(200).json(await featureController.getAllFeatures())
+    },
+    settings: {
+      level: "free",
+      featureCode: "feature",
+      action: "read"
     }
   })
 )
@@ -68,7 +89,9 @@ featureRoute.get(
       )
     },
     settings: {
-      level: "full"
+      level: "full",
+      featureCode: "feature",
+      action: "read"
     }
   })
 )
@@ -84,7 +107,9 @@ featureRoute.get(
       )
     },
     settings: {
-      level: "free"
+      level: "free",
+      featureCode: "feature",
+      action: "read"
     }
   })
 )
@@ -108,7 +133,11 @@ featureRoute.put(
         })
       )
     },
-    settings: { level: "full" }
+    settings: {
+      level: "full",
+      featureCode: "feature",
+      action: "write"
+    }
   })
 )
 
@@ -124,7 +153,9 @@ featureRoute.delete(
       )
     },
     settings: {
-      level: "full"
+      level: "full",
+      featureCode: "feature",
+      action: "write"
     }
   })
 )

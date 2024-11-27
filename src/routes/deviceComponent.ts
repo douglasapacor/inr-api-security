@@ -15,7 +15,7 @@ const deviceComponentController = new DeviceComponentController(
 deviceComponentRoute.post(
   "/new",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await deviceComponentController.create({
           name: req.body.name,
@@ -31,7 +31,7 @@ deviceComponentRoute.post(
 deviceComponentRoute.post(
   "/",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await deviceComponentController.search({
           name: req.body.name,
@@ -50,7 +50,7 @@ deviceComponentRoute.post(
 deviceComponentRoute.get(
   "/:id",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await deviceComponentController.getById({
           id: +req.params.id
@@ -66,7 +66,7 @@ deviceComponentRoute.get(
 deviceComponentRoute.put(
   "/:id/update",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await deviceComponentController.update({
           id: +req.params.id,
@@ -83,7 +83,7 @@ deviceComponentRoute.put(
 deviceComponentRoute.delete(
   "/:id/delete",
   wrapper({
-    handle: async (req, res, next) => {
+    handle: async (req, res) => {
       res.status(200).json(
         await deviceComponentController.delete({
           id: +req.params.id,

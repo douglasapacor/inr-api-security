@@ -1,4 +1,4 @@
-import type { NextFunction, Request, Response } from "express"
+import type { Request, Response } from "express"
 import type { defaultResponse } from "../../cases/types"
 export type settingsLevel = "free" | "controlled" | "full"
 export type attributesSettings = {
@@ -8,10 +8,6 @@ export type attributesSettings = {
   level: settingsLevel
 }
 export type attributes = {
-  handle: (
-    req: Request,
-    res: Response<defaultResponse>,
-    next: NextFunction
-  ) => Promise<void>
+  handle: (req: Request, res: Response<defaultResponse>) => Promise<void>
   settings: attributesSettings
 }
