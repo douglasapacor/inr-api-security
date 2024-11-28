@@ -14,7 +14,14 @@ export const createGroupValidation = z.object({
     .optional(),
   active: z.boolean(),
   super: z.boolean(),
-  features: z.array(z.number()),
+  features: z
+    .array(
+      z.object({
+        id: z.number(),
+        free: z.boolean()
+      })
+    )
+    .min(1, { message: "Selecione ao menos um recurso" }),
   createdById: z.number()
 })
 

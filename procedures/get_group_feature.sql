@@ -4,14 +4,16 @@ CREATE OR REPLACE FUNCTION inr.get_group_feature (
   gId INTEGER
 )RETURNS TABLE(
   id INTEGER,
-  name VARCHAR(100)
+  name VARCHAR(100),
+  freeForGroup BOOLEAN
 )
 AS $$
 BEGIN
   RETURN QUERY
   SELECT 
     gf."featureId" AS "id", 
-    f.name
+    f.name,
+    gf."freeForGroup"
   FROM inr."GroupFeature" AS gf
   LEFT JOIN inr."Feature" f 
     ON f.id = gf."featureId"

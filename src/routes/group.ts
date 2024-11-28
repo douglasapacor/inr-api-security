@@ -40,9 +40,7 @@ groupRoute.post(
           active: req.body.active,
           name: req.body.name,
           canonical: req.body.canonical,
-          createdBy: +req.user.id,
           super: req.body.super,
-          color: req.body.color,
           limit: req.body.limit,
           offset: req.body.offset
         })
@@ -65,7 +63,7 @@ groupRoute.get(
       )
     },
     settings: {
-      level: "free"
+      level: "full"
     }
   })
 )
@@ -87,7 +85,7 @@ groupRoute.put(
         })
       )
     },
-    settings: { level: "free" }
+    settings: { level: "full" }
   })
 )
 
@@ -103,7 +101,7 @@ groupRoute.delete(
       )
     },
     settings: {
-      level: "free"
+      level: "full"
     }
   })
 )

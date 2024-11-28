@@ -1,4 +1,4 @@
-import { postgresArrayTreatment, postgresStringfy, Repository } from "../types"
+import { postgresObjectArray, postgresStringfy, Repository } from "../types"
 
 export default class GroupRepository extends Repository {
   async create(params: {
@@ -8,7 +8,7 @@ export default class GroupRepository extends Repository {
     active: boolean
     super: boolean
     createdById: number
-    features: number[]
+    features: { id: number; free: boolean }[]
   }): Promise<{ create_group: number }> {
     try {
       return await this.call<{ create_group: number }>(
@@ -19,7 +19,7 @@ export default class GroupRepository extends Repository {
         params.active,
         params.super,
         params.createdById,
-        postgresArrayTreatment(params.features.toString())
+        postgresObjectArray(params.features)
       )
     } catch (error: any) {
       throw new Error(error.message)
@@ -34,7 +34,7 @@ export default class GroupRepository extends Repository {
     active: boolean
     super: boolean
     updatedBy: number
-    features: number[]
+    features: { id: number; free: boolean }[]
   }): Promise<{ update_group: number }> {
     try {
       return await this.call<{ update_group: number }>(
@@ -46,7 +46,7 @@ export default class GroupRepository extends Repository {
         params.active,
         params.super,
         params.updatedBy,
-        postgresArrayTreatment(params.features.toString())
+        postgresObjectArray(params.features)
       )
     } catch (error: any) {
       throw new Error(error.message)
@@ -105,7 +105,6 @@ export default class GroupRepository extends Repository {
   async search(params: {
     name: string
     canonical: string
-    color: string
     active: boolean
     super: boolean
     limit: number
@@ -117,7 +116,6 @@ export default class GroupRepository extends Repository {
       canonical: string
       color: string
       active: boolean
-      icon: string
       super: boolean
     }[]
   > {
@@ -129,14 +127,12 @@ export default class GroupRepository extends Repository {
           canonical: string
           color: string
           active: boolean
-          icon: string
           super: boolean
         }[]
       >(
         "search_group",
         postgresStringfy(params.name),
         postgresStringfy(params.canonical),
-        postgresStringfy(params.color),
         params.active,
         params.super,
         params.limit,

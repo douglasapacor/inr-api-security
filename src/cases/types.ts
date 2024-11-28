@@ -35,6 +35,10 @@ export function postgresStringfy(value: string): string {
   return `'${value}'`
 }
 
-export function postgresArrayTreatment(value: string): string {
+export function postgresArray(value: string): string {
   return `'{ ${value} }'`
+}
+
+export function postgresObjectArray(arr: Array<any>): string {
+  return `ARRAY[${arr.map(item => `'${JSON.stringify(item)}'::JSONB`)}]`
 }

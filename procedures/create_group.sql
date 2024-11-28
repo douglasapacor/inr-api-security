@@ -8,13 +8,14 @@ CREATE OR REPLACE FUNCTION inr.create_group (
   groupActive BOOLEAN,
   groupSuper BOOLEAN,
   createdBy INTEGER,
-  features integer[]
+  features JSONB[]
 ) RETURNS INTEGER
 AS $$
 DECLARE
   res_id INTEGER;
-  feature_id  INTEGER;
+  feature JSONB;
 BEGIN
+  -- Inserir o grupo
   INSERT INTO inr."Group" (
     active,
     canonical,
@@ -31,18 +32,26 @@ BEGIN
     groupColor,
     createdBy,
     now()
-  ) RETURNING id INTO res_id;
+  ) RETURNING id INTO res_id;  
+  
+  IF features IS NOT NULL AND array_length(features, 1) IS NOT NULL THEN
+    FOREACH feature IN ARRAY features LOOP
+      RAISE NOTICE 'Processando feature: %', feature;
+      INSERT INTO inr."GroupFeature" (
+        "groupId",
+        "featureId",
+        "freeForGroup"
+      ) VALUES (
+        res_id,
+        (feature->>'id')::INTEGER,
+        (feature->>'free')::BOOLEAN
+      );
+      RAISE NOTICE 'Feature inserida: %', feature;
+    END LOOP;
+  ELSE
+    RAISE NOTICE 'Nenhuma feature fornecida para o grupo %', res_id;
+  END IF;
 
-  FOREACH feature_id IN ARRAY features LOOP
-    INSERT INTO inr."GroupFeature" (
-      "groupId",
-      "featureId"
-    ) VALUES (
-      res_id,
-      feature_id
-    );
-  END LOOP;
   RETURN res_id;
-COMMIT;
 END;
 $$ LANGUAGE plpgsql;

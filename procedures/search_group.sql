@@ -3,7 +3,6 @@ DROP FUNCTION IF EXISTS inr.search_group;
 CREATE OR REPLACE FUNCTION inr.search_group (
   groupName VARCHAR(100),
   groupCanonical VARCHAR(100),
-  groupColor VARCHAR(7),
   groupActive BOOLEAN,
   groupSuper BOOLEAN,
   groupLimit INTEGER,
@@ -29,7 +28,6 @@ BEGIN
   FROM inr."Group" AS g
   WHERE (groupName IS NULL OR g.name ILIKE groupName || '%')
   AND (groupCanonical IS NULL OR g.canonical ILIKE groupCanonical || '%')
-  AND (groupColor IS NULL OR g.color ILIKE groupColor || '%')
   AND g.active = groupActive
   AND g.super = groupSuper
   AND g."deletedAt" ISNULL

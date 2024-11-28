@@ -1,4 +1,4 @@
-import { postgresArrayTreatment, postgresStringfy, Repository } from "../types"
+import { postgresArray, postgresStringfy, Repository } from "../types"
 
 export class FeatureRepository extends Repository {
   async create(params: {
@@ -23,7 +23,7 @@ export class FeatureRepository extends Repository {
         params.visible,
         params.deviceComponentsId,
         params.createdBy,
-        postgresArrayTreatment(params.actions.toString())
+        postgresArray(params.actions.toString())
       )
     } catch (error: any) {
       throw new Error(error.message)
@@ -54,7 +54,7 @@ export class FeatureRepository extends Repository {
         params.visible,
         params.deviceComponentsId,
         params.updatedBy,
-        postgresArrayTreatment(params.actions.toString())
+        postgresArray(params.actions.toString())
       )
     } catch (error: any) {
       throw new Error(error.message)
@@ -196,12 +196,11 @@ export class FeatureRepository extends Repository {
 
   async getGroupFeatures(params: {
     groupId: number
-  }): Promise<{ id: number; name: string }[]> {
+  }): Promise<{ id: number; name: string; freeForGroup: boolean }[]> {
     try {
-      return await this.list<{ id: number; name: string }[]>(
-        "get_group_feature",
-        params.groupId
-      )
+      return await this.list<
+        { id: number; name: string; freeForGroup: boolean }[]
+      >("get_group_feature", params.groupId)
     } catch (error: any) {
       throw new Error(error.message)
     }

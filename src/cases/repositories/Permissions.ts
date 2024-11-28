@@ -1,4 +1,4 @@
-import { postgresArrayTreatment, Repository } from "../types"
+import { postgresArray, Repository } from "../types"
 
 export default class PermissionRepository extends Repository {
   async create(params: {
@@ -13,7 +13,7 @@ export default class PermissionRepository extends Repository {
         params.userId,
         params.featureId,
         params.createdBy,
-        postgresArrayTreatment(params.actions.toString())
+        postgresArray(params.actions.toString())
       )
     } catch (error: any) {
       throw new Error(error.message)
