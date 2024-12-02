@@ -16,7 +16,6 @@ const userService = new UserService(
   emailProvider,
   permissionRepository
 )
-
 const userController = new UserController(userService)
 
 userRoute.post(
@@ -40,7 +39,10 @@ userRoute.post(
       )
     },
     settings: {
-      level: "free"
+      level: "full",
+      action: "write",
+      featureCode: "user",
+      groupCode: ["admin"]
     }
   })
 )
@@ -56,7 +58,10 @@ userRoute.get(
       )
     },
     settings: {
-      level: "free"
+      level: "full",
+      action: "read",
+      featureCode: "user",
+      groupCode: ["admin"]
     }
   })
 )
@@ -83,7 +88,10 @@ userRoute.put(
       )
     },
     settings: {
-      level: "free"
+      level: "full",
+      action: "write",
+      featureCode: "user",
+      groupCode: ["admin"]
     }
   })
 )
@@ -100,7 +108,10 @@ userRoute.delete(
       )
     },
     settings: {
-      level: "free"
+      level: "full",
+      action: "write",
+      featureCode: "user",
+      groupCode: ["admin"]
     }
   })
 )
@@ -125,7 +136,10 @@ userRoute.post(
       )
     },
     settings: {
-      level: "free"
+      level: "full",
+      action: "write",
+      featureCode: "user",
+      groupCode: ["admin"]
     }
   })
 )

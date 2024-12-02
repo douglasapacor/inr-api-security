@@ -24,7 +24,12 @@ deviceComponentRoute.post(
         })
       )
     },
-    settings: { level: "full" }
+    settings: {
+      level: "full",
+      featureCode: "component",
+      action: "write",
+      groupCode: ["admin"]
+    }
   })
 )
 
@@ -42,7 +47,10 @@ deviceComponentRoute.post(
       )
     },
     settings: {
-      level: "full"
+      level: "full",
+      featureCode: "component",
+      action: "read",
+      groupCode: ["admin"]
     }
   })
 )
@@ -58,7 +66,10 @@ deviceComponentRoute.get(
       )
     },
     settings: {
-      level: "full"
+      level: "full",
+      featureCode: "component",
+      action: "read",
+      groupCode: ["admin"]
     }
   })
 )
@@ -76,7 +87,12 @@ deviceComponentRoute.put(
         })
       )
     },
-    settings: { level: "full" }
+    settings: {
+      level: "full",
+      featureCode: "component",
+      action: "write",
+      groupCode: ["admin"]
+    }
   })
 )
 
@@ -92,7 +108,10 @@ deviceComponentRoute.delete(
       )
     },
     settings: {
-      level: "full"
+      level: "full",
+      featureCode: "component",
+      action: "write",
+      groupCode: ["admin"]
     }
   })
 )

@@ -15,12 +15,11 @@ export default class GroupService {
 
   async create(params: createGroupServiceProps): Promise<defaultResponse> {
     try {
-      const action = await this.groupRepository.create(params)
-
+      const group = await this.groupRepository.create(params)
       return {
         success: true,
         message: "Grupo criado com sucesso.",
-        data: { id: action.create_group }
+        data: { id: group.create_group }
       }
     } catch (error: any) {
       return {

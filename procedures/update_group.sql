@@ -34,23 +34,22 @@ BEGIN
 
   IF features IS NOT NULL AND array_length(features, 1) IS NOT NULL THEN
     FOREACH feature IN ARRAY features LOOP
-      BEGIN
-        INSERT INTO inr."GroupFeature" (
-          "groupId",
-          "featureId",
-          "freeForGroup"
-        ) VALUES (
-          res_id,
-          (feature->>'id')::INTEGER,
-          (feature->>'free')::BOOLEAN
-        );
-        
-        EXCEPTION WHEN OTHERS THEN
-          RAISE NOTICE 'Erro ao editar feature: %', SQLERRM;
-      END;
+      RAISE NOTICE 'Processando feature: %', feature;
+
+      INSERT INTO inr."GroupFeature" (
+        "groupId",
+        "featureId",
+        "freeForGroup"
+      ) VALUES (
+        gId,
+        (feature->>'id')::INTEGER,
+        (feature->>'free')::BOOLEAN
+      );
+
+      RAISE NOTICE 'Feature inserida: %', feature;
     END LOOP;
   ELSE
-    RAISE NOTICE 'Nenhuma feature fornecida para o grupo %', res_id;
+    RAISE NOTICE 'Nenhuma feature fornecida para o grupo %', gId;
   END IF;
 
   RETURN res_count;

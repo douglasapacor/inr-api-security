@@ -1,4 +1,4 @@
-import type { NextFunction, Request, Response } from "express"
+import type { Request, Response } from "express"
 import { verify } from "jsonwebtoken"
 import type { attributes } from "./types"
 import application from "../../config/application"
@@ -48,7 +48,8 @@ export default function wrapper(attr: attributes) {
         item => item === credential.groupName
       )
 
-      if (!allowedGroup || allowedGroup < 0) throw new Error("Não autorizado")
+      if (!allowedGroup || allowedGroup < 0)
+        throw new Error("Ação não autorizada pelo grupo")
 
       if (attr.settings.level === "controlled")
         return await attr.handle(req, res)

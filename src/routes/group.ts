@@ -27,7 +27,12 @@ groupRoute.post(
         })
       )
     },
-    settings: { level: "full" }
+    settings: {
+      level: "full",
+      action: "write",
+      featureCode: "group",
+      groupCode: ["admin"]
+    }
   })
 )
 
@@ -47,7 +52,10 @@ groupRoute.post(
       )
     },
     settings: {
-      level: "free"
+      level: "full",
+      action: "read",
+      featureCode: "group",
+      groupCode: ["admin"]
     }
   })
 )
@@ -63,7 +71,10 @@ groupRoute.get(
       )
     },
     settings: {
-      level: "full"
+      level: "full",
+      action: "read",
+      featureCode: "group",
+      groupCode: ["admin"]
     }
   })
 )
@@ -85,7 +96,12 @@ groupRoute.put(
         })
       )
     },
-    settings: { level: "full" }
+    settings: {
+      level: "full",
+      action: "write",
+      featureCode: "group",
+      groupCode: ["admin"]
+    }
   })
 )
 
@@ -101,7 +117,10 @@ groupRoute.delete(
       )
     },
     settings: {
-      level: "full"
+      level: "full",
+      action: "write",
+      featureCode: "group",
+      groupCode: ["admin"]
     }
   })
 )

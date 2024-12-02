@@ -33,7 +33,8 @@ featureRoute.post(
     settings: {
       level: "full",
       featureCode: "feature",
-      action: "write"
+      action: "write",
+      groupCode: ["admin"]
     }
   })
 )
@@ -59,7 +60,8 @@ featureRoute.post(
     settings: {
       level: "full",
       featureCode: "feature",
-      action: "read"
+      action: "read",
+      groupCode: ["admin"]
     }
   })
 )
@@ -73,7 +75,8 @@ featureRoute.get(
     settings: {
       level: "free",
       featureCode: "feature",
-      action: "read"
+      action: "read",
+      groupCode: ["admin"]
     }
   })
 )
@@ -91,7 +94,8 @@ featureRoute.get(
     settings: {
       level: "full",
       featureCode: "feature",
-      action: "read"
+      action: "read",
+      groupCode: ["admin"]
     }
   })
 )
@@ -107,9 +111,10 @@ featureRoute.get(
       )
     },
     settings: {
-      level: "free",
+      level: "full",
       featureCode: "feature",
-      action: "read"
+      action: "read",
+      groupCode: ["admin"]
     }
   })
 )
@@ -136,7 +141,8 @@ featureRoute.put(
     settings: {
       level: "full",
       featureCode: "feature",
-      action: "write"
+      action: "write",
+      groupCode: ["admin"]
     }
   })
 )
@@ -155,7 +161,8 @@ featureRoute.delete(
     settings: {
       level: "full",
       featureCode: "feature",
-      action: "write"
+      action: "write",
+      groupCode: ["admin"]
     }
   })
 )
