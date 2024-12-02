@@ -4,8 +4,8 @@ export const searchActionValidation = z.object({
   canonical: z
     .string()
     .max(40, { message: "nome canonico deve conter até 40 caracteres." }),
-  limit: z.number(),
-  offset: z.number()
+  limit: z.number({ message: "limit é obrigatório." }),
+  offset: z.number({ message: "limit é obrigatório." })
 })
 
 export type searchActionControllerProps = z.input<typeof searchActionValidation>

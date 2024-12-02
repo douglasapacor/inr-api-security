@@ -7,7 +7,7 @@ import type { searchActionServiceProps } from "../schema/searchAction"
 import type { updateActionServiceProps } from "../schema/updateAction"
 
 export default class ActionService {
-  constructor(private actionRepository: ActionRepository) {}
+  constructor(private actionRepository: ActionRepository) { }
 
   async create(params: createActionServiceProps): Promise<defaultResponse> {
     try {

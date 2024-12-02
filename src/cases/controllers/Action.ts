@@ -22,7 +22,7 @@ import {
 } from "../schema/updateAction"
 
 export default class ActionController {
-  constructor(private actionComponentService: ActionService) {}
+  constructor(private actionComponentService: ActionService) { }
 
   async create(params: createActionControllerProps): Promise<defaultResponse> {
     try {
