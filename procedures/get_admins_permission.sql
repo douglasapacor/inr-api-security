@@ -8,6 +8,7 @@ RETURNS TABLE (
   featurePath VARCHAR(300),
   featureCanonical VARCHAR(100),
   featureDeviceComponentId INTEGER,
+  featureVisible BOOLEAN,
   deviceName VARCHAR(100),
   featureDeviceId INTEGER,
   actions JSONB
@@ -22,6 +23,7 @@ BEGIN
     f."path",
     f.canonical,
     f."deviceComponentsId",
+    f.visible,
     dc."name" as "deviceName",
     dc."deviceId",
     (

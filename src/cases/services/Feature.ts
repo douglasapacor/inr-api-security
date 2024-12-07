@@ -53,6 +53,7 @@ export default class FeatureService {
       for (let i = 0; i < params.actions.length; i++) {
         if (params.actions[i].checked) actions.push(params.actions[i].id)
       }
+
       const response = await this.featureRepository.update({
         id: params.id,
         actions,
@@ -65,6 +66,7 @@ export default class FeatureService {
         icon: params.icon,
         path: params.path
       })
+
       if (response.update_feature <= 0) throw new Error("Não houve alterações")
 
       return {

@@ -258,15 +258,18 @@ export default class UserService {
           name: userPermissionsResults[i].featurename,
           icon: userPermissionsResults[i].featureicon,
           path: userPermissionsResults[i].featurepath,
+          visible: userPermissionsResults[i].featurevisible,
           deviceId: userPermissionsResults[i].featuredeviceid
         })
 
         rawToken.credentials[userPermissionsResults[i].featurecanonical] = []
 
-        for (let y = 0; y < userPermissionsResults[i].actions.length; y++) {
-          rawToken.credentials[userPermissionsResults[i].featurecanonical].push(
-            userPermissionsResults[i].actions[y].canonical
-          )
+        if (userPermissionsResults[i].actions) {
+          for (let y = 0; y < userPermissionsResults[i].actions.length; y++) {
+            rawToken.credentials[
+              userPermissionsResults[i].featurecanonical
+            ].push(userPermissionsResults[i].actions[y].canonical)
+          }
         }
       }
 

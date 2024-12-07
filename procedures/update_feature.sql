@@ -36,15 +36,23 @@ BEGIN
 
   GET DIAGNOSTICS res_count = ROW_COUNT;
 
-  FOREACH action_id IN ARRAY actions LOOP
-    INSERT INTO inr."FeatureAction" (
-      "featureId", 
-      "actionId"
-    ) VALUES (
-      featureId,
-      action_id
-    );
-  END LOOP;
+  IF actions IS NOT NULL AND array_length(actions, 1) IS NOT NULL THEN
+    FOREACH action_id IN ARRAY actions LOOP
+      RAISE NOTICE 'Processando action: %', action_id;
+
+      INSERT INTO inr."FeatureAction" (
+        "featureId", 
+        "actionId"
+      ) VALUES (
+        featureId,
+        action_id
+      );
+
+      RAISE NOTICE 'Action inserida: %', action_id;
+    END LOOP;
+  ELSE
+    RAISE NOTICE 'Nenhuma action fornecida para a feature %', gId;
+  END IF;
 
   RETURN res_count;
 COMMIT;

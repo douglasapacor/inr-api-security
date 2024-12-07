@@ -9,6 +9,7 @@ CREATE OR REPLACE FUNCTION inr.get_permissions (
   featurePath VARCHAR(300),
   featureCanonical VARCHAR(100),
   featureDeviceComponentId INTEGER,
+  featureVisible BOOLEAN,
   featureDeviceComponentName VARCHAR(100),
   featureDeviceId INTEGER,
   actions JSONB
@@ -23,6 +24,7 @@ BEGIN
     fe.path,
     fe.canonical,
     fe."deviceComponentsId",
+    fe.visible,
     dc.name AS "deviceName",
     dc."deviceId",
     (

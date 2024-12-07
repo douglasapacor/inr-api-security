@@ -82,11 +82,11 @@ featureRoute.get(
 )
 
 featureRoute.get(
-  "/:id",
+  "/actions/:id",
   wrapper({
     handle: async (req, res) => {
       res.status(200).json(
-        await featureController.getById({
+        await featureController.getFeaturesActions({
           id: +req.params.id
         })
       )
@@ -101,11 +101,11 @@ featureRoute.get(
 )
 
 featureRoute.get(
-  "/actions/:id",
+  "/:id",
   wrapper({
     handle: async (req, res) => {
       res.status(200).json(
-        await featureController.getFeaturesActions({
+        await featureController.getById({
           id: +req.params.id
         })
       )

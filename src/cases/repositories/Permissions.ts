@@ -28,6 +28,7 @@ export default class PermissionRepository extends Repository {
       featurepath: string
       featurecanonical: string
       devicecomponentId: number
+      featurevisible: boolean
       devicename: string
       featuredeviceid: number
       actions: { id: number; name: string; canonical: string }[]
@@ -42,6 +43,7 @@ export default class PermissionRepository extends Repository {
           featurepath: string
           featurecanonical: string
           devicecomponentId: number
+          featurevisible: boolean
           devicename: string
           featuredeviceid: number
           actions: { id: number; name: string; canonical: string }[]
@@ -60,6 +62,7 @@ export default class PermissionRepository extends Repository {
       featurepath: string
       featurecanonical: string
       devicecomponentId: number
+      featurevisible: boolean
       devicename: string
       featuredeviceid: number
       actions: { id: number; name: string; canonical: string }[]
@@ -74,6 +77,7 @@ export default class PermissionRepository extends Repository {
           featurepath: string
           featurecanonical: string
           devicecomponentId: number
+          featurevisible: boolean
           devicename: string
           featuredeviceid: number
           actions: { id: number; name: string; canonical: string }[]
