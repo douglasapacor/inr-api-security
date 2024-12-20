@@ -1,4 +1,3 @@
-import queue from "../config/queue"
 import databaseClient from "../lib/dbClient/databaseClient"
 import fetch, { requestResponse } from "../lib/fetch"
 

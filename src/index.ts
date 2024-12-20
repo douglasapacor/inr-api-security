@@ -4,7 +4,6 @@ import http from "http"
 import cors from "cors"
 import bodyParser from "body-parser"
 import application from "./config/application"
-// import initialize from "./lib/initialize"
 import router from "./router"
 import initialize from "./lib/initialize"
 const app = express()
@@ -26,7 +25,6 @@ app.use(router)
 
 httpServer.listen(application.port, async () => {
   await initialize()
-
   console.log(
     `Api "${application.name}" running on: ${application.host}:${application.port}`
   )
