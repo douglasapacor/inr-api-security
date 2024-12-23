@@ -1,4 +1,5 @@
 import databaseClient from "../lib/dbClient/databaseClient"
+import fetch, { requestResponse } from "../lib/fetch"
 
 export type defaultResponse = {
   success: boolean
@@ -29,7 +30,21 @@ export class Repository {
   }
 }
 
-export class Provider {}
+export class Provider {
+  protected async call<T = any>(
+    url: string,
+    body: any
+  ): Promise<requestResponse<T>> {
+    try {
+      return await fetch.post<T>(url, body)
+    } catch (error: any) {
+      return {
+        success: false,
+        message: error.message
+      }
+    }
+  }
+}
 
 export function postgresStringfy(value: string): string {
   return `'${value}'`

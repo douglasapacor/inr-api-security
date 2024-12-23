@@ -4,13 +4,12 @@ let databaseClient: PrismaClient
 
 if (process.env.NODE_ENV === "production") {
   databaseClient = new PrismaClient({
-    log: ["query", "info", "warn", "error"]
+    log: ["info", "warn", "error"]
   })
 } else {
   if (!global.databaseClient) {
     global.databaseClient = new PrismaClient({
-      // log: ["info", "warn", "error"],
-      log: ["query", "info", "warn", "error"]
+      log: ["info", "warn", "error"]
     })
   }
 
