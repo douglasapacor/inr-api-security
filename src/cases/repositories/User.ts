@@ -434,17 +434,4 @@ export default class UserRepository extends Repository {
       throw new Error(error.message)
     }
   }
-
-  async registerFirstUser(params: {
-    firstUserId: number
-  }): Promise<{ register_first_user: string }> {
-    try {
-      return await this.call<{ register_first_user: string }>(
-        "register_first_user",
-        params.firstUserId
-      )
-    } catch (error: any) {
-      throw new Error(error.message)
-    }
-  }
 }

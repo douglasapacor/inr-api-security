@@ -1,6 +1,9 @@
 import { compare, genSaltSync, hashSync } from "bcrypt"
+import { sign } from "jsonwebtoken"
+import application from "../../config/application"
 import { generateKey } from "../../lib/helpers/randoms"
 import type EmailProvider from "../providers/Email"
+import type PermissionRepository from "../repositories/Permissions"
 import type UserRepository from "../repositories/User"
 import type { authenticationUserServiceProps } from "../schema/authenticationUser"
 import type { commonDeleteServiceProps } from "../schema/commomDelete"
@@ -11,9 +14,6 @@ import type { recoveryPasswordServiceProps } from "../schema/recoveryPassword"
 import type { searchUserServiceProps } from "../schema/searchUser"
 import type { updateUserServiceProps } from "../schema/updateUser"
 import type { defaultResponse } from "../types"
-import type PermissionRepository from "../repositories/Permissions"
-import application from "../../config/application"
-import { sign } from "jsonwebtoken"
 
 export default class UserService {
   constructor(
@@ -66,7 +66,7 @@ export default class UserService {
         })
       }
 
-      this.emailProvider.newUser(params.email, params.name, randomPass)
+      // this.emailProvider.newUser(params.email, params.name, randomPass)
 
       return {
         success: true,
@@ -320,9 +320,9 @@ export default class UserService {
 
       if (!userId) throw new Error("Usuário não encontrado.")
 
-      const userFinded = await this.userRepository.getUserToAuthentication(
-        userId
-      )
+      // const userFinded = await this.userRepository.getUserToAuthentication(
+      //   userId
+      // )
 
       const randomPass = generateKey(8)
       const salt = await genSaltSync(10)
@@ -336,7 +336,7 @@ export default class UserService {
       if (updated.update_for_recovery <= 0)
         throw new Error("Não houve alterações")
 
-      this.emailProvider.recoveryRequest(userFinded.email, hash)
+      // this.emailProvider.recoveryRequest(userFinded.email, hash)
 
       return {
         success: true,

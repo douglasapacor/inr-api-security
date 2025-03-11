@@ -1,9 +1,9 @@
 import express from "express"
-import wrapper from "../lib/wrapper"
-import { FeatureRepository } from "../cases/repositories/Feature"
-import FeatureService from "../cases/services/Feature"
 import FeatureController from "../cases/controllers/Feature"
 import ActionRepository from "../cases/repositories/Action"
+import { FeatureRepository } from "../cases/repositories/Feature"
+import FeatureService from "../cases/services/Feature"
+import wrapper from "../lib/wrapper"
 
 const featureRoute = express.Router()
 

@@ -1,22 +1,12 @@
 import type { Request, Response } from "express"
 import { verify } from "jsonwebtoken"
-import type { attributes } from "./types"
 import application from "../../config/application"
+import type { attributes } from "./types"
+
 export default function wrapper(attr: attributes) {
   return async (req: Request, res: Response): Promise<void> => {
     try {
-      res.on("finish", () => {
-        req.meta.finish = new Date().getMilliseconds()
-
-        console.log(
-          `"${req.baseUrl}${req.path}" | ${req.meta.method} | ${
-            (req.meta.finish - req.meta.start) / 1000
-          } second(s)`
-        )
-      })
-
       if (attr.settings.level === "free") return await attr.handle(req, res)
-
       if (!req.headers["authorization"]) throw new Error("Não autorizado")
 
       const credential: any = verify(
@@ -35,6 +25,8 @@ export default function wrapper(attr: attributes) {
           },
           message: "Usuário precisa alterar a senha."
         })
+
+        return
       }
 
       req.user = {
